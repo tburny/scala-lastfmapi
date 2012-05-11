@@ -8,6 +8,6 @@ import http._
  */
 
 trait Configuration {
-  abstract def account : ApiAccount
-  abstract def apiService : ApiService
+  def account : ApiAccount
+  def apiService : ApiService
 }
