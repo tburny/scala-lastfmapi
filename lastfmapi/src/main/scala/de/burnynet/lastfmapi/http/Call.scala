@@ -1,42 +1,33 @@
 package de.burnynet.lastfmapi.http
 
-import collection.mutable.ListBuffer
-import de.burnynet.lastfmapi.{ApiAccount, Utility}
+import de.burnynet.lastfmapi.ApiAccount
 
 /**
  * Stores information on an API call. Class should not implement any internal logic of the last.fm API
  * functionality
+ *
+ * @param apiPackage The name of the package, e.g. "artist"
+ * @param apiMethod The method to call
+ * @param parameters The parameters of the API call, excluding method and session
  * @author tobi
  */
+class Call(
+            val apiPackage: String,
+            val apiMethod: String,
+            val parameters: Map[String, String]
+            ) {
 
-abstract class Call(
-  val apiPackage : String,
-  val apiMethod:String,
-  val parameters: Map[String, String]
-)
+  val methodParameter = apiPackage + "." + apiMethod
 
-case class NormalCall(
-    override val apiPackage: String,
-    override val apiMethod:String,
-    override val parameters: Map[String, String]
-  ) extends Call(apiPackage,apiMethod,parameters)
-
-case class AuthenticatedCall(
-                 override val apiPackage: String,
-                 override val apiMethod:String,
-                 sessionKey: String,
-                 override val parameters: Map[String, String],
-                 isWriteRequest:Boolean = false
-                 ) extends Call(apiPackage,apiMethod,parameters)
-object Call {
-
-  def apply(apiPackage : String, apiMethod:String, params: Map[String, String], sessionKey: String,
-            isWriteRequest: Boolean = false) : Call = {
-    new AuthenticatedCall(apiPackage,apiMethod,sessionKey, params, isWriteRequest)
-  }
-    def apply(apiPackage : String, apiMethod:String, params: Map[String, String], sign: Boolean = false,
-            isWriteRequest: Boolean = false) : Call = {
-    new NormalCall(apiPackage, apiMethod, params)
+  /**
+   * @return A [[scala.collection.Map]][String,String] containing all parameters required to perform the request
+   *         including ones like "method" or "session". Does not include api key and secret for convenience reasons
+   */
+  def getParameterMap(apiAccount: ApiAccount): Map[String, String] = {
+    parameters +("method" -> methodParameter, "api_key" -> apiAccount.key)
   }
 
 }
+
+
+
