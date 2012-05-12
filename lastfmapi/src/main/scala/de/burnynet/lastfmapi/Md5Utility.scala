@@ -8,8 +8,7 @@ import collection.mutable.ListBuffer
  * @author tobi
  */
 
-object Utility {
-
+object Md5Utility {
 
   def md5SumString(bytes : Array[Byte]) : String = {
     val md5 = MessageDigest.getInstance("MD5")
