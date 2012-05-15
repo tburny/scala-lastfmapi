@@ -1,0 +1,28 @@
+scala-lastfmapi - A scala library for the last.fm api 2.0
+=========================================================
+
+Currently, there isn't really a last.fm library available for Scala (http://scala-lang.org).
+The goal of this project is to provide a carefully tested Scala implementation of the full last.fm API 2.0, which is  avaliable at http://last.fm/api/2.0
+Of course, this will not only include all API requests available, but various caching and request rate limiting mechanisms.
+
+
+State of the project
+====================
+The project is currently under heavy development. The core functionality is already implemented, but surely needs some improvements.
+
+Licence
+=======
+
+   Copyright 2012 Tobias Brennecke
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
