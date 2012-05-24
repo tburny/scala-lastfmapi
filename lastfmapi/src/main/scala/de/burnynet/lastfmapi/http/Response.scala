@@ -1,6 +1,6 @@
 package de.burnynet.lastfmapi.http
 
-import xml.NodeSeq
+import xml.{Elem, NodeSeq}
 
 
 /**
@@ -9,6 +9,12 @@ import xml.NodeSeq
  */
 
 class Response(val xml: NodeSeq) {
+
+  /**
+   * Gets the root element of the xml inside the &lt;lfm&gt; tag
+   */
+  // TODO what if child is empty
+  lazy val dataXml = xml(0).child.collect {case e : Elem => e}
 
   lazy val status = (xml \ "@status").text.toLowerCase match {
     case "ok" => ResponseStatus.OK

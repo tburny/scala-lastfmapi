@@ -14,7 +14,7 @@ class ResponseTest extends FunSpec with GivenWhenThen with ShouldMatchers {
 
   describe("A successful API response") {
     given("The response xml with status ok")
-    val xml = <lfm status="ok"></lfm>
+    val xml = <lfm status="ok"><artist>test</artist></lfm>
     and("the Response object")
     val response = Response(xml)
 
@@ -23,6 +23,9 @@ class ResponseTest extends FunSpec with GivenWhenThen with ShouldMatchers {
     }
     it("should not have an error") {
       response.error should equal(None)
+    }
+    it("should have selected the correct data tag") {
+      response.dataXml.text should equal("test")
     }
   }
 
