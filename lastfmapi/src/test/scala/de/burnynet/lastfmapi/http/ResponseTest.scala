@@ -18,9 +18,6 @@ class ResponseTest extends FunSpec with GivenWhenThen with ShouldMatchers {
     and("the Response object")
     val response = Response(xml)
 
-    it("should have the status 'ok'") {
-      response.status should equal(ResponseStatus.OK)
-    }
     it("should not have an error") {
       response.error should equal(None)
     }
@@ -36,9 +33,6 @@ class ResponseTest extends FunSpec with GivenWhenThen with ShouldMatchers {
       <error code="10">Error reason</error>
     </lfm>
     val response = Response(xml)
-
-    when("the status is 'failed'")
-    response.status should equal(ResponseStatus.FAILED)
 
     then("should have error object")
 
