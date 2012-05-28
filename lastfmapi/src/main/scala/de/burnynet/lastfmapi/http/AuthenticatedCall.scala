@@ -49,6 +49,9 @@ object AuthenticatedCall {
     val s = sorted.foldLeft(ListBuffer[String]()) {
       case (x: ListBuffer[String], (key: String, value: String)) => x += (key + value)
     }.reduceLeft(_ + _) + apiAccount.secret
+
+    //FIXME
+    println(s)
     // Must be UTF-8 encoded
     Md5Utility.md5SumString(s.getBytes("UTF-8"))
   }
