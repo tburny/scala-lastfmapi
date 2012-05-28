@@ -7,23 +7,39 @@ import de.burnynet.lastfmapi.XmlHelper.fetchList
 class SimpleArtist(
                     val name: String,
                     val url: String,
-                    val images: List[Image]) {}
+                    val images: List[Image]) {
+
+
+  /**
+   * Find the image with the specified size
+   * @param imageSize
+   * @return [[scala.Some]]([[de.burnynet.lastfmapi.types.Image]] or [[scala.None]]
+   */
+  def imageWithSize(imageSize: ImageSize.ImageSize): Option[Image] = {
+    val l = images filter (
+      p => p.size equals imageSize
+      )
+    if (l.size > 0)  Some(l(0)) else None
+  }
+
+}
 
 object SimpleArtist {
 
   def apply(xml: NodeSeq): SimpleArtist = {
+    val root = xml
     new SimpleArtist(
-      extractName(xml),
-      extractUrl(xml),
-      Image.findAllIn(xml)
+      extractName(root),
+      extractUrl(root),
+      Image.findAllIn(root)
     )
   }
 
-  def extractName(xml: NodeSeq) =
-    xml \ "name" text
-
-  def extractUrl(xml: NodeSeq) =
-    xml \ "url" text
+  def extractName(xml: NodeSeq) : String = {
+    (xml \ "name").text
+  }
+  def extractUrl(xml: NodeSeq) : String =
+    (xml \ "url").text
 
   /**
    * Find all artist objects within xml

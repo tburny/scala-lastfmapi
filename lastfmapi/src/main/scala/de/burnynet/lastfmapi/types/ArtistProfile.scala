@@ -12,8 +12,8 @@ class Biography (
 object Biography {
   def apply(xml:NodeSeq) : Biography = {
     val published = DateTimeConverter.convertIso8601Date(xml \ "date" text)
-    val summary = xml \"summary"  text
-    val content = xml \"content"  text
+    val summary = (xml \"summary").text
+    val content = (xml \"content").text
 
     new Biography(published, summary, content)
   }
@@ -33,32 +33,24 @@ class ArtistProfile (
                      ) extends SimpleArtist(name, url, images) {
 
 
-  /**
-   * Find the image with the specified size
-   * @param imageSize
-   * @return [[scala.Some]]([[de.burnynet.lastfmapi.types.Image]] or [[scala.None]]
-   */
-  def imageWithSize(imageSize: ImageSize.ImageSize): Option[Image] = {
-    val l = images filter (
-      p => p.size equals imageSize
-      )
-    if (l.size > 0)  Some(l(0)) else None
-  }
-
  // override def toString() = "name=" + name + ",listeners=" + listeners + ",musicBrainzId=" + musicBrainzId + "images="
 }
 
 
 object ArtistProfile {
 
+  /**
+   *
+   * @param xml Parent node under which to find the artist node
+   * @return
+   */
   def apply(xml: NodeSeq): ArtistProfile = {
     val root = xml
-
     val name = SimpleArtist.extractName(root)
     val url = SimpleArtist.extractUrl(root)
-    val musicBrainzId = root \ "mbid" text
+    val musicBrainzId = (root \ "mbid").text
     val images: List[Image] = Image.findAllIn(root)
-    val streamable = (root \ "streamable" text) equals ("1")
+    val streamable = (root \ "streamable").text equals ("1")
     val listeners = (root \ "stats" \ "listeners").text.toInt
     val playcount = (root \ "stats" \ "playcount").text.toInt
 
